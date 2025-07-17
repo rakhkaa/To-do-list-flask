@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple To-Do List</title>
+</head>
+<body>
+    <h1>Simple To-Do List</h1>
+    
+    <!-- Form untuk menambah task baru -->
+    <form method="POST" action="/add">
+        <input type="text" name="task" placeholder="Masukkan task baru..." required>
+        <button type="submit">Tambah</button>
+    </form>
+    
+    <hr>
+    
+    <!-- Daftar todos -->
+    <h2>Daftar Tugas:</h2>
+    
+    {% if todos %}
+        <ul>
+        {% for todo in todos %}
+            <li>
+                {% if todo.completed %}
+                    <s>{{ todo.task }}</s> (Selesai)
+                {% else %}
+                    {{ todo.task }}
+                {% endif %}
+                
+                <br>
+                
+                <!-- Tombol toggle status -->
+                <a href="/toggle/{{ todo.id }}">
+                    {% if todo.completed %}
+                        Tandai belum selesai
+                    {% else %}
+                        Tandai selesai
+                    {% endif %}
+                </a>
+                
+                <!-- Tombol hapus -->
+                <a href="/delete/{{ todo.id }}">Hapus</a>
+            </li>
+            <br>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Belum ada tugas. Tambahkan tugas pertama Anda!</p>
+    {% endif %}
+    
+</body>
+</html>
